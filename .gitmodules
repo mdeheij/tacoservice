@@ -1,0 +1,3 @@
+[submodule "tacofancy"]
+	path = tacofancy
+	url = https://github.com/sinker/tacofancy.git
