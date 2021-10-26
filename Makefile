@@ -11,7 +11,7 @@ export $(shell sed 's/=.*//' $(cnf))
 # export $(shell sed 's/=.*//' $(dpl))
 
 # grep the version from the mix file
-VERSION=$(shell grep -oP "(?<=version: ).*" charts/tacoservice/Chart.yaml)
+VERSION=$(shell grep -oP "(?<=appVersion: ).*" charts/tacoservice/Chart.yaml)
 
 
 # HELP
@@ -34,7 +34,8 @@ build: ## Build the container
 bump: ## Increment version
 	@echo "Current: ${VERSION}"
 	@read -p "New version: " NEW \
-	&& sed -i "s/^version: .*/version: $${NEW}/" charts/tacoservice/Chart.yaml
+	&& sed -i "s/^version: .*/version: $${NEW}/" charts/tacoservice/Chart.yaml \
+	&& sed -i "s/^appVersion: .*/appVersion: $${NEW}/" charts/tacoservice/Chart.yaml
 
 run: ## Run container on port configured in `.env`
 	docker stop $(APP_NAME)-frontend $(APP_NAME)-backend || echo 

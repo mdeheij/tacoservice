@@ -6,7 +6,7 @@ frontend:
     repository: tacoservice-frontend # TODO: repository?
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: latest
+    # tag: latest
 
 replicaCount: 1
 
