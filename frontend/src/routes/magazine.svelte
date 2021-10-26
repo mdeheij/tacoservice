@@ -11,7 +11,7 @@
 	import tacoStore from '../stores/TacoStore';
 	let md = new MarkdownIt();
 
-	const baseLayers = tacoStore.elements;
+	const tacos = tacoStore.elements;
 
 	function summary(taco: TacoRecipe) {
 		return md.render(taco.summary());
@@ -22,7 +22,7 @@
 	});
 </script>
 
-{#if $baseLayers && $baseLayers.length > 3}
+{#if $tacos && $tacos.length > 3}
 	<div class="flex flex-col sm:flex-row max-w-8xl mx-auto">
 		<div class="flex flex-col sm:w-2/3 sm:border-r border-gray-300">
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-8">
@@ -30,46 +30,46 @@
 					class="p-5 text-left sm:border-r border-gray-300 sm:row-span-2 sm:col-span-2 flex flex-col"
 				>
 					<p class="text-red-600 uppercase font-semibold font-display text-xs tracking-widest my-3">
-						{$baseLayers[0].getTag()}
+						{$tacos[0].getTag()}
 					</p>
-					<a class="font-serif text-4xl capitalize pb-4" href={'/' + $baseLayers[0].filename}
-						>{$baseLayers[0].name}</a
+					<a class="font-serif text-4xl capitalize pb-4" href={'/' + $tacos[0].filename}
+						>{$tacos[0].name}</a
 					>
 
 					<p class="font-serif text-gray-600 text-sm leading-snug summary summary">
-						{@html summary($baseLayers[0])}
+						{@html summary($tacos[0])}
 					</p>
 
-					<ActionButton style="w-48" href={'/' + $baseLayers[0].filename}>Read recipe</ActionButton>
+					<ActionButton style="w-48" href={'/' + $tacos[0].filename}>Read recipe</ActionButton>
 				</div>
 				<div class="mx-5 pb-5 text-left border-b border-gray-300 flex flex-col">
 					<p class="text-red-600 uppercase font-semibold font-display text-xs tracking-widest mb-1">
 						Featured
 					</p>
-					<a class="font-serif text-xl capitalize" href={'/' + $baseLayers[1].filename}>
-						{$baseLayers[1].name}
+					<a class="font-serif text-xl capitalize" href={'/' + $tacos[1].filename}>
+						{$tacos[1].name}
 					</a>
 
 					<div class="flex flex-row space-x-6 flex-1">
 						<p
 							class="font-serif text-gray-600 text-sm leading-snug summary overflow-ellipsis overflow-hidden"
 						>
-							{@html summary($baseLayers[1])}
+							{@html summary($tacos[1])}
 						</p>
 					</div>
 				</div>
 				<div class="mx-4 py-5 text-left flex flex-col">
 					<p class="text-red-600 uppercase font-semibold font-display text-xs tracking-widest mb-1">
-						{$baseLayers[2].getTag()}
+						{$tacos[2].getTag()}
 					</p>
-					<a class="font-serif text-xl capitalize" href={'/' + $baseLayers[2].filename}
-						>{$baseLayers[2].name}</a
+					<a class="font-serif text-xl capitalize" href={'/' + $tacos[2].filename}
+						>{$tacos[2].name}</a
 					>
 					<div class="flex flex-row">
 						<p
 							class="font-serif text-gray-600 text-sm leading-snug summary overflow-ellipsis overflow-hidden"
 						>
-							{@html summary($baseLayers[2])}
+							{@html summary($tacos[2])}
 						</p>
 					</div>
 				</div>
@@ -81,14 +81,14 @@
 						<p
 							class="text-red-600 uppercase font-semibold font-display text-xs tracking-widest mb-1"
 						>
-							{$baseLayers[3].getTag()}
+							{$tacos[3].getTag()}
 						</p>
-						<a class="font-serif text-xl capitalize" href={'/' + $baseLayers[3].filename}>
-							{$baseLayers[3].name}
+						<a class="font-serif text-xl capitalize" href={'/' + $tacos[3].filename}>
+							{$tacos[3].name}
 						</a>
 						<div class="flex flex-row">
 							<p class="font-serif text-gray-600 text-sm leading-snug summary">
-								{@html summary($baseLayers[3])}
+								{@html summary($tacos[3])}
 							</p>
 						</div>
 					</div>
@@ -96,15 +96,15 @@
 						<p
 							class="text-red-600 uppercase font-semibold font-display text-xs tracking-widest mb-1"
 						>
-							{$baseLayers[4].getTag()}
+							{$tacos[4].getTag()}
 						</p>
 
-						<a class="font-serif text-xl capitalize" href={'/' + $baseLayers[4].filename}>
-							{$baseLayers[4].name}
+						<a class="font-serif text-xl capitalize" href={'/' + $tacos[4].filename}>
+							{$tacos[4].name}
 						</a>
 						<div class="flex flex-row">
 							<p class="font-serif text-gray-600 text-sm leading-snug summary">
-								{@html summary($baseLayers[4])}
+								{@html summary($tacos[4])}
 							</p>
 							<img
 								class="h-20"
@@ -119,16 +119,16 @@
 						<p
 							class="text-red-600 uppercase font-semibold font-display text-xs tracking-widest mb-1"
 						>
-							{$baseLayers[5].getTag()}
+							{$tacos[5].getTag()}
 						</p>
-						<a class="font-serif text-xl capitalize" href={'/' + $baseLayers[5].filename}>
-							{$baseLayers[5].name}
+						<a class="font-serif text-xl capitalize" href={'/' + $tacos[5].filename}>
+							{$tacos[5].name}
 						</a>
 						<p class="font-serif text-gray-600 text-sm leading-snug summary">
-							{@html summary($baseLayers[5])}
+							{@html summary($tacos[5])}
 						</p>
 
-						<ActionButton style="w-48" href={'/' + $baseLayers[1].filename}>
+						<ActionButton style="w-48" href={'/' + $tacos[1].filename}>
 							Read recipe
 						</ActionButton>
 					</div>
@@ -136,14 +136,14 @@
 						<p
 							class="text-red-600 uppercase font-semibold font-display text-xs tracking-widest mb-1"
 						>
-							Try a new {$baseLayers[6].getTag()}
+							Try a new {$tacos[6].getTag()}
 						</p>
 
-						<a class="font-serif text-xl capitalize" href={'/' + $baseLayers[6].filename}>
-							{$baseLayers[6].name}
+						<a class="font-serif text-xl capitalize" href={'/' + $tacos[6].filename}>
+							{$tacos[6].name}
 						</a>
 						<p class="font-serif text-gray-600 text-sm leading-snug summary">
-							{@html summary($baseLayers[6])}
+							{@html summary($tacos[6])}
 						</p>
 						<div class="flex flex-row justify-between mt-auto">
 							<p class="text-gray-700 text-xs font-medium">FREE</p>
@@ -192,14 +192,14 @@
 					<div class="flex flex-col">
 						{#each Array(5) as _, i}
 							<p class="text-red-600 uppercase font-semibold font-display text-xs tracking-widest ">
-								Random {$baseLayers[8 + i].getTag()}
+								Random {$tacos[8 + i].getTag()}
 							</p>
 
 							<a
 								class="my-2 font-serif capitalize text-lg"
-								href={'/' + $baseLayers[8 + i].filename}
+								href={'/' + $tacos[8 + i].filename}
 							>
-								{$baseLayers[8 + i].name}
+								{$tacos[8 + i].name}
 							</a>
 							<hr class="my-4" />
 						{/each}

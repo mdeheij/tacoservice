@@ -7,7 +7,6 @@
 <script>
 	import Matcher from '../components/Matcher.svelte';
 	import { onMount } from 'svelte';
-	import { state } from '../stores/baseLayers';
 	import ActionButton from '../components/ActionButton.svelte';
 </script>
 
