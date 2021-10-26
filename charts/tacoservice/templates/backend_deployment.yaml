@@ -55,6 +55,8 @@ spec:
           {{end}}
           - name: quarkus_log_level
             value: info
+          - name: APP_VERSION
+            value: ".Chart.AppVersion"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
