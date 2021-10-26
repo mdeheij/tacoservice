@@ -14,7 +14,7 @@ image: # TODO: rename to backend
   repository: tacoservice-backend # TODO: repository?
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: latest
+  # tag: latest
 
 imagePullSecrets: []
 nameOverride: ""

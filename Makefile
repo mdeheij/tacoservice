@@ -11,7 +11,7 @@ export $(shell sed 's/=.*//' $(cnf))
 # export $(shell sed 's/=.*//' $(dpl))
 
 # grep the version from the mix file
-# VERSION=$(shell ./version.sh)
+VERSION=$(shell grep -oP "(?<=version: ).*" charts/tacoservice/Chart.yaml)
 
 
 # HELP
@@ -28,16 +28,17 @@ help: ## This help.
 # DOCKER TASKS
 # Build the container
 build: ## Build the container
-	docker build -t $(IMAGE_REPO)/$(APP_NAME)-frontend frontend
-	docker build -t $(IMAGE_REPO)/$(APP_NAME)-backend backend
+	docker build -t $(IMAGE_REPO)/$(APP_NAME)-frontend:$(VERSION) frontend
+	docker build -t $(IMAGE_REPO)/$(APP_NAME)-backend:$(VERSION) backend
 
-# build-nc: ## Build the container without caching
-# 	docker build --no-cache -t $(IMAGE_REPO)/$(APP_NAME) .
+bump: ## Increment version
+	@echo $(VERSION)
+#	sed -i.bak "s/^version:/version: $APP_VERSION/" Chart.yaml
 
 run: ## Run container on port configured in `.env`
 	docker stop $(APP_NAME)-frontend $(APP_NAME)-backend || echo 
-	docker run --rm --env-file=./.env -p=$(BACKEND_PORT):80 --name="$(APP_NAME)-frontend" $(IMAGE_REPO)/$(APP_NAME)-frontend &
-	docker run -i -t --rm --env-file=./.env -p=$(BACKEND_PORT):8080 --name="$(APP_NAME)-backend" $(IMAGE_REPO)/$(APP_NAME)-backend
+	docker run --rm --env-file=./.env -p=$(BACKEND_PORT):80 --name="$(APP_NAME)-frontend" $(IMAGE_REPO)/$(APP_NAME)-frontend:$(VERSION) &
+	docker run -i -t --rm --env-file=./.env -p=$(BACKEND_PORT):8080 --name="$(APP_NAME)-backend" $(IMAGE_REPO)/$(APP_NAME)-backend:$(VERSION)
 	docker stop $(APP_NAME)-frontend
 
 up: build run ## Run container on port configured in `config.env` (Alias to run)
@@ -45,37 +46,17 @@ up: build run ## Run container on port configured in `config.env` (Alias to run)
 stop: ## Stop and remove a running container
 	docker stop $(APP_NAME)-backend; docker rm $(APP_NAME)-backend
 
-release: build-nc publish ## Make a release by building and publishing the `{version}` ans `latest` tagged containers to ECR
+release: bump build publish
 
 # Docker publish
-publish: publish-latest # publish-version ## Publish the `{version}` ans `latest` tagged containers to ECR
+publish: publish-version
 
-publish-latest: ## Publish the `latest` taged container to ECR
+publish-latest:
 	@echo 'publish latest to $(IMAGE_REPO)'
 	docker push $(IMAGE_REPO)/$(APP_NAME)-frontend:latest
 	docker push $(IMAGE_REPO)/$(APP_NAME)-backend:latest
 
-# publish-version: tag-version ## Publish the `{version}` taged container to ECR
-# 	@echo 'publish $(VERSION) to $(DOCKER_REPO)'
-# 	docker push $(DOCKER_REPO)/$(APP_NAME):$(VERSION)
-
-
-# # HELPERS
-
-# # generate script to login to aws docker repo
-# CMD_REPOLOGIN := "eval $$\( aws ecr"
-# ifdef AWS_CLI_PROFILE
-# CMD_REPOLOGIN += " --profile $(AWS_CLI_PROFILE)"
-# endif
-# ifdef AWS_CLI_REGION
-# CMD_REPOLOGIN += " --region $(AWS_CLI_REGION)"
-# endif
-# CMD_REPOLOGIN += " get-login --no-include-email \)"
-
-# # login to AWS-ECR
-# repo-login: ## Auto login to AWS-ECR unsing aws-cli
-# 	@eval $(CMD_REPOLOGIN)
-
-# version: ## Output the current version
-# 	@echo $(VERSION)
-	
+publish-version:
+	@echo 'publish latest to $(IMAGE_REPO)'
+	docker push $(IMAGE_REPO)/$(APP_NAME)-frontend:$(VERSION)
+	docker push $(IMAGE_REPO)/$(APP_NAME)-backend:$(VERSION)
