@@ -1,10 +1,8 @@
 module.exports = {
-  	mode: "jit",
+  mode: "jit",
 	purge: [
 		"./src/**/*.{html,js,svelte,ts}",
 	],
-  // purge: ['layouts/**/*.html'],
-  // darkMode: 'media', // or 'media' or 'class'
   theme: {
     container: {
       padding: {
@@ -15,23 +13,13 @@ module.exports = {
         '2xl': '8em',
       },
     },
-
     fontFamily: {
       body: ['Merriweather', 'serif'],
       display: ['Helvetica', 'Arial', 'sans-serif'],
     },
     extend: {
-      // animation: {
-      //   wiggle: 'wiggle 1s ease-in-out infinite',
-      // },
-      // keyframes: {
-      //   wiggle: {
-      //     '0%, 100%': { transform: 'rotate(-30deg)' },
-      //     '30%': { transform: 'rotate(30deg)' },
-      //   }
-      // },
       colors: {
-        // 'blue-light': '#c2d9ed',
+        'primary': '#c2d9ed',
       }
     }
   },
