@@ -8,7 +8,7 @@ RUN npm run build
 RUN find ./build -type d
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
-FROM nginx:latest
+FROM nginx:alpine
 #Copy ci-dashboard-dist
 COPY --from=build-stage /app/build/ /usr/share/nginx/html
 #Copy default nginx configuration
