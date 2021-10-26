@@ -32,8 +32,9 @@ build: ## Build the container
 	docker build -t $(IMAGE_REPO)/$(APP_NAME)-backend:$(VERSION) backend
 
 bump: ## Increment version
-	@echo $(VERSION)
-#	sed -i.bak "s/^version:/version: $APP_VERSION/" Chart.yaml
+	@echo "Current: ${VERSION}"
+	@read -p "New version: " NEW \
+	&& sed -i "s/^version: .*/version: $${NEW}/" charts/tacoservice/Chart.yaml
 
 run: ## Run container on port configured in `.env`
 	docker stop $(APP_NAME)-frontend $(APP_NAME)-backend || echo 
